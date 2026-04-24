@@ -31,9 +31,7 @@ Where:
 	exit 0
 }
 
-shell_escape() {
-	printf "'%s'" "$(printf '%s' "$1" | sed "s/'/'\\''/g")"
-}
+# shell_escape() is provided by send2common
 
 escape_sed_replacement() {
 	printf '%s' "$1" | sed -e 's/[\\/&]/\\&/g'
