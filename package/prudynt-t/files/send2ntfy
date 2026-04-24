@@ -129,15 +129,18 @@ fi
 # so we prioritize file over snapshot over video.
 if [ -n "$filename" ] && [ -f "$filename" ]; then
 	s_filename=$(shell_escape "$filename")
-	command="$command -T $s_filename -H $(shell_escape "Filename: $filename")"
+	s_filename_header=$(shell_escape "Filename: $filename")
+	command="$command -T $s_filename -H $s_filename_header"
 elif [ "true" = "$send_photo" ]; then
 	photo=$(copy_photo)
 	s_photo=$(shell_escape "$photo")
-	command="$command -T $s_photo -H $(shell_escape "Filename: $photo")"
+	s_photo_header=$(shell_escape "Filename: $photo")
+	command="$command -T $s_photo -H $s_photo_header"
 elif [ "true" = "$send_video" ]; then
 	video=$(copy_video)
 	s_video=$(shell_escape "$video")
-	command="$command -T $s_video -H $(shell_escape "Filename: $video")"
+	s_video_header=$(shell_escape "Filename: $video")
+	command="$command -T $s_video -H $s_video_header"
 fi
 
 #[ -n "$title" ] && command="$command -H 'Title: $title'"
