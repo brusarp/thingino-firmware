@@ -103,7 +103,14 @@ jobs:
             echo "New commits detected since last release - building"
             echo "should_build=true" >> $GITHUB_OUTPUT
           fi
-
+      - name: Inject WiFi secrets
+        env:
+          WLAN_SSID: ${{ secrets.WLAN_SSID }}
+          WLAN_PASS: ${{ secrets.WLAN_PASS }}
+        run: |
+          sed -i "s/^\(\s*ssid=\).*/\1\"${WLAN_SSID}\"/" package/wifi/files/wpa_supplicant.conf
+          sed -i "s/^\(\s*psk=\).*/\1\"${WLAN_PASS}\"/" package/wifi/files/wpa_supplicant.conf
+          
   notify-no-build:
     runs-on: ubuntu-26.04
     needs: check-updates
